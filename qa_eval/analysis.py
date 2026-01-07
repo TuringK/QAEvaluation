@@ -456,11 +456,6 @@ def plot_subset_performance(
     if output_path:
         plt.savefig(output_path, dpi=300, bbox_inches="tight")
 
-    plt.tight_layout()
-
-    if output_path:
-        plt.savefig(output_path, dpi=300, bbox_inches="tight")
-
     return fig
 
 
