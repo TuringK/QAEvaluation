@@ -37,11 +37,17 @@ def compute_abstention_metrics(predictions: List[dict]) -> Dict[str, float]:
     n_answered = 0
 
     for p in predictions:
-        if p.get("abstained", False):
-            n_abstained += 1
-        elif p.get("extraction_method") == "failed":
-            n_abstained += 1
-        elif p.get("predicted_idx") is None and p.get("match_type") == "none":
+        # A prediction is treated as abstained if any of the following holds:
+        # - The pipeline explicitly flags it as abstained.
+        # - The answer extraction step failed.
+        # - No prediction was extracted and the match type indicates no match.
+        is_abstained = (
+            p.get("abstained", False)
+            or p.get("extraction_method") == "failed"
+            or (p.get("predicted_idx") is None and p.get("match_type") == "none")
+        )
+
+        if is_abstained:
             n_abstained += 1
         else:
             n_answered += 1
