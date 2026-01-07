@@ -213,7 +213,7 @@ The analysis extracts and computes the following metrics for each dataset:
 
 - `performance_aggregated.png`: Bar chart comparing 4 key metrics (coverage, accuracy_all, accuracy_answered, selective_risk) across all datasets
   
-- `performance_subsets_<dataset>.png`: Grid layouts showing persubset performance for MMLU and MuSR datasets
+- `performance_subsets_<dataset>.png`: Grid layouts showing per-subset performance for MMLU and MuSR datasets
 
 - `coverage_accuracy_tradeoff.png`: Scatter plot showing the coverage-accuracy trade-off across all datasets:
   - X-axis: Coverage (% questions answered)
