@@ -14,6 +14,7 @@ from pathlib import Path
 
 from qa_eval.config import load_eval_config
 from qa_eval.evaluator import run_eval
+from qa_eval.analysis import generate_analysis_report
 
 
 def parse_args() -> argparse.Namespace:
@@ -58,6 +59,11 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default=None,
         help="Override model name or path",
+    )
+    parser.add_argument(
+        "--no-analysis",
+        action="store_true",
+        help="Skip automatic analysis after evaluation",
     )
 
     return parser.parse_args()
@@ -140,6 +146,39 @@ def main() -> int:
     if len(valid_results) > 1:
         avg_acc = sum(m["accuracy"] for m in valid_results) / len(valid_results)
         print(f"Average accuracy: {avg_acc:.2%}")
+
+    if not args.no_analysis:
+        print("\n" + "=" * 60)
+        print("Running Analysis")
+        print("=" * 60 + "\n")
+
+        try:
+            experiment_dir = Path(eval_cfg.output_dir) / eval_cfg.run_name
+            analysis_results = generate_analysis_report(experiment_dir)
+
+            print("\n" + "=" * 60)
+            print("Analysis Summary")
+            print("=" * 60)
+
+            df_agg = analysis_results["aggregated"]
+            print("\nAggregated Performance (Abstention Metrics):")
+            cols_to_show = [
+                "dataset",
+                "split",
+                "coverage",
+                "accuracy_all",
+                "accuracy_answered",
+                "n_abstained",
+            ]
+            print(df_agg[cols_to_show].to_string(index=False))
+
+            print("\nNote: Check analysis/ directory for CSVs and visualisations")
+
+        except Exception as e:
+            print(f"\nWarning: Analysis failed: {e}", file=sys.stderr)
+            print(
+                "You can run analysis manually with: python analyse_results.py <output_dir>"
+            )
 
     return 0
 

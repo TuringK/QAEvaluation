@@ -1,3 +1,9 @@
+> [!WARNING]
+> TODOs:
+> 1. Improve prediction answer detection (after analysing some outputs manually, the current system doesn't seem to handle complex answers well)
+> 2. Implement AbstentionBench's keyword abstention detection to compare results accurately
+
+
 A QA evaluation framework for testing language models on multiple question-answering datasets.
 
 ## Overview
@@ -159,6 +165,59 @@ Each dataset evaluation produces:
    ```bash
    cat outputs/eval_run/*/metrics.json
    ```
+
+## Analysis & Reporting
+
+### Automatic Analysis
+
+Analysis runs automatically after evaluation completes. To disable:
+
+```bash
+python run_eval.py --config configs/my_config.json --no-analysis
+```
+
+### Standalone Analysis Script
+
+You can reanalyse existing results without re-running evaluation:
+
+```bash
+python analyse_results.py outputs/my_eval
+```
+
+This generates analysis reports in `outputs/my_eval/analysis/`.
+
+### Metrics Tracked
+
+The analysis extracts and computes the following metrics for each dataset:
+
+**Coverage Metrics:**
+- `n_total`: Total number of samples
+- `n_answered`: Questions attempted
+- `n_abstained`: Questions skipped (Currently only a basic abstention detector is implemented, would be nice to implement the keyword one from AbstentionBench)
+- `coverage`: Percentage of questions answered (n_answered / n_total)
+
+**Accuracy Metrics:**
+- `accuracy_all`: Standard accuracy on all samples (n_correct / n_total)
+- `accuracy_answered`: Selective accuracy on answered questions only (n_correct / n_answered)
+- `selective_risk`: Error rate on answered questions (n_wrong / n_answered)
+- `n_correct`: Number of correct predictions
+- `n_wrong`: Number of incorrect predictions
+
+### Results Produced
+
+#### CSV Tables
+- `aggregated_results.csv`: Combined metrics across dataset subsets (e.g. all MMLU subjects in one row)
+- `detailed_results.csv`: Individual subset metrics (e.g. each MMLU subject as separate row)
+
+#### Visualisations
+
+- `performance_aggregated.png`: Bar chart comparing 4 key metrics (coverage, accuracy_all, accuracy_answered, selective_risk) across all datasets
+  
+- `performance_subsets_<dataset>.png`: Grid layouts showing persubset performance for MMLU and MuSR datasets
+
+- `coverage_accuracy_tradeoff.png`: Scatter plot showing the coverage-accuracy trade-off across all datasets:
+  - X-axis: Coverage (% questions answered)
+  - Y-axis: Accuracy on answered questions
 
 ## Advanced Usage
 
