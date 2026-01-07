@@ -1,0 +1,32 @@
+# AbstentionEval - QA Evaluation Framework Requirements
+# Python >= 3.10 recommended
+
+# Core ML Libraries
+torch>=2.1.0
+transformers>=4.36.0
+datasets>=2.14.0
+
+# Data validation and configuration
+pydantic>=2.0.0
+
+# Utilities
+tqdm>=4.65.0
+
+# For CUDA support with PyTorch
+# Install PyTorch with CUDA using the command below instead of pip install:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+#
+# Or for CUDA 11.8:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# Note: The torch line above will install CPU version.
+# Use the pip commands above with --index-url for CUDA support.
+
+# Optional but recommended for specific model architectures
+accelerate>=0.25.0
+bitsandbytes>=0.41.0  # For 8-bit quantization
+sentencepiece>=0.1.99  # For some tokenizers (LLaMA, etc.)
+protobuf>=3.20.0  # For some model configs
+
+# Optional: Flash Attention for faster inference (requires CUDA and proper GPU)
+# flash-attn>=2.3.0  # Uncomment if you have compatible GPU and want flash attention

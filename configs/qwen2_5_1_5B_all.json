@@ -1,0 +1,77 @@
+{
+  "model": {
+    "model_name_or_path": "Qwen/Qwen2.5-1.5B-Instruct",
+    "revision": null,
+    "dtype": "auto",
+    "device": "auto",
+    "max_new_tokens": 256,
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "do_sample": true,
+    "batch_size": 8,
+    "generation_kwargs": {}
+  },
+  "datasets": [
+    {
+      "name": "csqa2",
+      "split": "validation",
+      "subset": null,
+      "max_examples": null,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "strategyqa",
+      "split": "train",
+      "subset": null,
+      "max_examples": null,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "mmlu_redux",
+      "split": "test",
+      "subset": null,
+      "max_examples": null,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "gpqa",
+      "split": "train",
+      "subset": "gpqa_diamond",
+      "max_examples": null,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "gsm8k",
+      "split": "test",
+      "subset": null,
+      "max_examples": 500,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "agieval",
+      "split": "test",
+      "subset": "sat-en",
+      "max_examples": null,
+      "shuffle_seed": 42
+    },
+    {
+      "name": "musr",
+      "split": "validation",
+      "subset": null,
+      "max_examples": null,
+      "shuffle_seed": 42
+    }
+  ],
+  "prompt": {
+    "style": "default",
+    "system_prompt": "You are a helpful assistant. For multiple choice questions, respond with only the letter of the correct answer. For open-ended questions, give a short, direct answer.",
+    "few_shot_examples_path": null,
+    "include_options_as_letters": true,
+    "force_answer_letter": true
+  },
+  "output_dir": "./outputs",
+  "run_name": "Qwen2_5_1_5B_all",
+  "num_workers": 0,
+  "log_every": 50
+}
