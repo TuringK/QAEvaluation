@@ -31,7 +31,7 @@ def compute_abstention_metrics(predictions: List[dict]) -> Dict[str, float]:
     n_total = len(predictions)
 
     # Just checking for no answer or failed retrieval for now
-    # TODO: Implement same abstention retirieval as in AbstentionBench?
+    # TODO: Implement same abstention retrieval as in AbstentionBench?
     n_abstained = 0
     n_correct = 0
     n_answered = 0
